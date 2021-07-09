@@ -54,17 +54,8 @@ class Compressor:
                 return
             print("encoding in progress...")
             data_length = len(self.data)
-            # progress_bar = tqdm(range(data_length))
-            # for i in progress_bar:
-            #     if self.data[i] in self.charbit_map:
-            #         self.encoded_data += str(self.charbit_map[self.data[i]])
-            #     else:
-
-            #         print(data,"Not encoded properly, Or the input string was changed")
-            #         return 
 
             self.encoded_data = ''.join([self.charbit_map[i] for i in self.data])
-            # print(self.encoded_data)
             pass
         
         def getPaddedString():
