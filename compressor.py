@@ -1,9 +1,12 @@
 import os
+from decompressor import Decompressor
+from tqdm import tqdm
 class Compressor:
     def __init__(self):
         self.frequency_map = {}
         self.char_list = []
         self.charbit_map = {}
+        self.reverse_charbit_map = {}
         self.data = None
         self.encoded_data = ''
         self.bytes_array = None
@@ -20,8 +23,10 @@ class Compressor:
 
         with open(self.path,'r+') as file , open(output_path,'wb') as output:
             string = file.read()
+            string = string.rstrip()
             self.getPaddedEncodedString(string)
-            
+            # print(self.encoded_data)
+            # print("length",len(self.encoded_data))
             self.getBytesArray()
             output.write(self.bytes_array)
         pass
@@ -36,6 +41,7 @@ class Compressor:
         def createBitMapHelper(char,bit):
             if type(char) == str:
                 self.charbit_map[char] = bit
+                self.reverse_charbit_map[bit] = char
                 return
             left = 0
             right = 1
@@ -46,14 +52,19 @@ class Compressor:
             if self.data == None:
                 print("Invalid data!!")
                 return
+            print("encoding in progress...")
+            data_length = len(self.data)
+            # progress_bar = tqdm(range(data_length))
+            # for i in progress_bar:
+            #     if self.data[i] in self.charbit_map:
+            #         self.encoded_data += str(self.charbit_map[self.data[i]])
+            #     else:
 
-            for data in self.data:
-                if data in self.charbit_map:
-                    self.encoded_data += str(self.charbit_map[data])
-                else:
+            #         print(data,"Not encoded properly, Or the input string was changed")
+            #         return 
 
-                    print(data,"Not encoded properly, Or the input string was changed")
-                    return 
+            self.encoded_data = ''.join([self.charbit_map[i] for i in self.data])
+            # print(self.encoded_data)
             pass
         
         def getPaddedString():
@@ -140,3 +151,6 @@ if __name__ == "__main__":
     # c.getPaddedEncodedString('abcdakabcaghaghiklmdfcbmhg')
     # c.getBytesArray()
     c.compress()
+
+    d = Decompressor(c)
+    d.decompress()

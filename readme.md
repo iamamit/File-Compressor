@@ -6,4 +6,4 @@
 #   #       #   #####   #####       #####   #####   #               #   #       #   #   #####   #####     #####     #####   #   #
 #######################################################################################################################################
 
-# Compressor Implemented using HUFFMAN-CODING
+Huffman coding is a lossless data compression algorithm. The idea is to assign variable-length codes to input characters.
